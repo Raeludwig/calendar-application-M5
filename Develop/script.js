@@ -15,7 +15,8 @@ $(function () {
 
 
 
-  // This is the code for the date
+  // This is the code for the date, it is working and in the right format.
+  
   var today = dayjs();
 $('#currentDay').text(today.format('dddd, MMMM D'));
 
