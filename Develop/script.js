@@ -4,8 +4,9 @@
 
 //TODO-fix the local storage issue -rs
 const saveBtn = document.getElementsByClassName('btn saveBtn col-2 col-md-1');
+var textArea =document.getElementsByTagName('text-area')
 var eventInfo = [];
-
+localStorage.getItem('Events');
 saveBtn.addEventListener('click', (e){
 localStorage.setItem("Events", JSON.stringify(eventInfo));
 });
