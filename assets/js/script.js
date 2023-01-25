@@ -33,6 +33,7 @@ $(function () {
   var today = dayjs();
 $('#currentDay').text(today.format('dddd, MMMM D'));
 
+// working on getting the color change based on the time
 
 
 
