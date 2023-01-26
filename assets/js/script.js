@@ -13,6 +13,20 @@ localStorage.setItem("Events", JSON.stringify(eventInfo));
 
 $(function () {
 
+  function updateHour() {
+    $('.time-block').each(function() {
+  // checking the hour of each time block 
+      var scheduledHour = parseInt($(this).attr('id').split('-')[1]);
+  // setting the class to match if the time block hour is in past, present or future
+    if (scheduledHour < currHour) {
+      $(this).addClass('past');
+    } else if (scheduledHour === currHour) {
+      $(this).addClass('present');
+    } else {
+      $(this).addClass('future');
+    }
+    })
+  }
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -33,12 +47,42 @@ $(function () {
   var today = dayjs();
 $('#currentDay').text(today.format('dddd, MMMM D'));
 
-// working on getting the color change based on the time
+// var today = moment();
+// // reference the whole task (time and textarea)
+// var timeBlockEl = document.querySelector('#container');
+// // working on getting the color change based on the time
+// function colorCodedTime() {
+//   // get current number of hours
+//   var currentHour = today.hours();
 
+//   // loop over each time block
+//   $('.time-block').each(function () {
+//     var timeId = parseInt($(this).attr('id').split("hour")[1]);
 
+//     // if the time Id attribute is before the current hour, add the past class
+//     if (timeId < currentHour) {
+//       $(this).addClass('#past');
+//     } // if the time Id attribute is equal to the current hour, remove the past and future classes and add the present class
+//     else if (timeId === currentHour) {
+//       $(this).removeClass('past');
+//       $(this).removeClass('future');
+//       $(this).addClass('present');
+//     } // If the time Id attribute is greater than the current time, remove the past and present classes and add the future class
+//     else {
+//       $(this).removeClass('past');
+//       $(this).removeClass('present');
+//       $(this).addClass('future');
+//     }
+//   });
+// }
+// colorCodedTime();
+// setTimeout(function () {
+//   // clear the current URL
+//   location = ''; // location references the current URL
+// }, 1000 * 60);
 
-
-
+let currentHour = moment().format("hA");
+$(".hour:contains(" + currentHour + ")").addClass("present");
 
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
