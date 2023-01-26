@@ -13,6 +13,17 @@ localStorage.setItem("Events", JSON.stringify(eventInfo));
 
 $(function () {
 
+  // This is the code for the date, it is working and in the right format.
+  
+  var today = dayjs();
+$('#currentDay').text(today.format('dddd, MMMM D'));
+
+  for (var i=9; i<17; i++){
+    updateHour(i);
+  }
+
+  var currHour = dayjs().hour();
+
   function updateHour() {
     $('.time-block').each(function() {
   // checking the hour of each time block 
@@ -27,6 +38,9 @@ $(function () {
     }
     })
   }
+ 
+
+  
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -42,10 +56,7 @@ $(function () {
 
 
 
-  // This is the code for the date, it is working and in the right format.
-  
-  var today = dayjs();
-$('#currentDay').text(today.format('dddd, MMMM D'));
+
 
 // var today = moment();
 // // reference the whole task (time and textarea)
