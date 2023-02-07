@@ -8,8 +8,7 @@ var eventInfo = [];
 localStorage.getItem('.events');
 
 $(".saveBtn").click(function () {
-  localStorage.setItem(".events");
-  localStorage.getItem(".events");
+ saveNotes()
 });
 
 //current date
@@ -34,3 +33,13 @@ $('.time-block').each(function () {
   }
   console.log(typeof (scheduledHour))
 })
+
+
+//save to local storage
+function saveNotes() {
+  var notes = JSON.parse(localStorage.getItem('textarea')) || []
+  notes.push()
+
+  localStorage.setItem('textarea', JSON.stringify(notes))
+
+}
