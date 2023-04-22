@@ -1,14 +1,12 @@
 
 //TODO-fix the local storage issue -rs
-const saveBtn = document.getElementsByClassName('btn saveBtn col-2 col-md-1');
-var textArea = document.getElementsByTagName('text-area')
+const saveBtn = document.getElementsByClassName('btn saveBtn col-2 col-md-1')[0];
+var textArea = document.getElementsByTagName('text-area')[0];
 
 //local storage
-var eventInfo = [];
-localStorage.getItem('.events');
-
+var eventInfo = JSON.parse(localStorage.getItem('myEvents')) || []; // changing the key name and saving the result
 $(".saveBtn").click(function () {
- saveNotes()
+  saveNotes();
 });
 
 //current date
@@ -31,15 +29,14 @@ $('.time-block').each(function () {
   } else {
     $(this).addClass('future');
   }
-  console.log(typeof (scheduledHour))
 })
 
 
 //save to local storage
 function saveNotes() {
-  var notes = JSON.parse(localStorage.getItem('textarea')) || []
-  notes.push()
+  var notes = JSON.parse(localStorage.getItem('myEvents')) || []
+  notes.push(textArea.value); // pushing new notes into the array
 
-  localStorage.setItem('textarea', JSON.stringify(notes))
+  localStorage.setItem('myEvents', JSON.stringify(notes))
 
 }
