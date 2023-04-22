@@ -1,42 +1,57 @@
+// Get references to HTML elements
+const saveBtns = document.querySelectorAll('.saveBtn');
+const textAreas = document.querySelectorAll('textarea');
+const currentDayEl = $('#currentDay');
+const timeBlocks = $('.time-block');
 
-//TODO-fix the local storage issue -rs
-const saveBtn = document.getElementsByClassName('btn saveBtn col-2 col-md-1')[0];
-var textArea = document.getElementsByTagName('text-area')[0];
+// Define a function to initialize the app
+function init() {
+  // Load saved notes from local storage after DOM is fully loaded
+  document.addEventListener("DOMContentLoaded", function() {
+    let savedNotes = loadNotes();
+    for (let i = 0; i < textAreas.length; i++) {
+      textAreas[i].value = savedNotes[i] || '';
+    }
+  });
 
-//local storage
-var eventInfo = JSON.parse(localStorage.getItem('myEvents')) || []; // changing the key name and saving the result
-$(".saveBtn").click(function () {
-  saveNotes();
-});
+  // Save notes to local storage when button is clicked
+  saveBtns.forEach(saveBtn => {
+    saveBtn.addEventListener('click', function() {
+      saveNotes();
+    });
+  });
 
-//current date
-var today = dayjs();
-$('#currentDay').text(dayjs().format('dddd, MMMM D'));
+  // Display current date
+  const today = dayjs();
+  currentDayEl.text(today.format('dddd, MMMM D'));
 
-
-//changes the color for the blocks
-var currHour = parseInt(dayjs().hour());
-
-
-$('.time-block').each(function () {
-  // checking the hour of each time block 
-  var scheduledHour = parseInt($(this).attr('id').split('-')[1]);
-  // setting the class to match if the time block hour is in past, present or future
-  if (scheduledHour < currHour) {
-    $(this).addClass('past');
-  } else if (scheduledHour === currHour) {
-    $(this).addClass('present');
-  } else {
-    $(this).addClass('future');
-  }
-})
-
-
-//save to local storage
-function saveNotes() {
-  var notes = JSON.parse(localStorage.getItem('myEvents')) || []
-  notes.push(textArea.value); // pushing new notes into the array
-
-  localStorage.setItem('myEvents', JSON.stringify(notes))
-
+  // Set color classes for each time block
+  const currHour = parseInt(dayjs().hour());
+  timeBlocks.each(function () {
+    const scheduledHour = parseInt($(this).attr('id').split('-')[1]);
+    if (scheduledHour < currHour) {
+      $(this).addClass('past');
+    } else if (scheduledHour === currHour) {
+      $(this).addClass('present');
+    } else {
+      $(this).addClass('future');
+    }
+  });
 }
+
+// Save notes to local storage and return updated savedNotes array
+function saveNotes() {
+  let savedNotes = [];
+  for (let i = 0; i < textAreas.length; i++) {
+    savedNotes.push(textAreas[i].value);
+  }
+  localStorage.setItem('myEvents', JSON.stringify(savedNotes));
+}
+
+// Load notes from local storage and return savedNotes array
+function loadNotes() {
+  return JSON.parse(localStorage.getItem('myEvents')) || [];
+}
+
+// Call the init function to start the app
+init();
